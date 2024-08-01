@@ -1,5 +1,21 @@
 # Business Directory
 
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Technologies](#technologies)
+4. [Setup](#setup)
+   - [Prerequisites](#prerequisites)
+   - [Installation](#installation)
+   - [Running Migrations and Seed Data](#run-migrations-and-seed-data-if-applicable)
+   - [Starting the Server](#starting-the-server)
+5. [Usage](#usage)
+6. [Folder Structure](#folder-structure)
+7. [Contributing](#contributing)
+8. [License](#license)
+9. [Contact](#contact)
+
 ## Overview
 
 The Business Directory is a web application built with Node.js, Express, and PostgreSQL. It allows users to browse businesses, rate them, save their favorites, and more. The application includes features for business owners to manage their business listings and for admins to oversee the platform.
@@ -61,14 +77,14 @@ The Business Directory is a web application built with Node.js, Express, and Pos
     JWT_SECRET=your_jwt_secret
     ```
 
-4. **Run migrations and seed data (if applicable):**
+### Running Migrations and Seed Data (if applicable)
 
     ```bash
     npm run migrate
     npm run seed
     ```
 
-5. **Start the server:**
+### Starting the Server
 
     ```bash
     npm start
