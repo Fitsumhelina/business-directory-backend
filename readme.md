@@ -242,6 +242,8 @@ The API follows RESTful principles. Below are the primary endpoints available:
 - Get All Permissions: `GET /api/permissions`
 - Create a Permission: `POST /api/permissions`
 
-### Contributing
 
-Contributions are welcome! Please fork the repository and create a pull request with your changes.
+#### Contributors
+
+- [Fitsumhelina](https://github.com/Fitsumhelina)
+- [Yabe12](https://github.com/Yabe12)
