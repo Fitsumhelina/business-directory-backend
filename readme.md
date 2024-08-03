@@ -5,14 +5,25 @@ This project is a backend application for a business directory platform, built u
 ## Table of Contents
 
 - [Project Overview](#project-overview)
-- [Features](#features)
-- [Folder Structure](#folder-structure)
-- [Setup Instructions](#setup-instructions)
-- [Database Migrations](#database-migrations)
+- [User Types and Roles](#user-types-and-roles)
+  - [Random Users](#random-users)
+  - [Business Owners](#business-owners)
+  - [Admins](#admins)
+- [How the Project Works](#how-the-project-works)
+  - [User Authentication and Authorization](#user-authentication-and-authorization)
+  - [Business Registration and Management](#business-registration-and-management)
+  - [User Interaction](#user-interaction)
+  - [Role-Based Features](#role-based-features)
+  - [Database and Migrations](#database-and-migrations)
 - [API Documentation](#api-documentation)
+- [Setup Instructions](#setup-instructions)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Database Migrations](#database-migrations)
 - [Contributing](#contributing)
+  - [Contributors](#contributors)
+- [Folder Structure](#folder-structure)
 - [License](#license)
-# Business Directory Backend
 
 ## Project Overview
 
@@ -74,175 +85,7 @@ The Business Directory Backend is a comprehensive platform designed to manage bu
 - **PostgreSQL Database:** The project uses PostgreSQL to store user data, business information, ratings, comments, and more.
 - **Knex Migrations:** Knex.js is used for managing database schema changes through migration files. Migrations help in evolving the database schema without losing data.
 
-### API Endpoints
-
-- **Authentication Routes:** For user login, registration, and JWT token management.
-- **Business Routes:** For creating, updating, and retrieving business information.
-- **Rating and Comment Routes:** For adding and retrieving ratings and comments.
-- **Admin Routes:** For administrative tasks such as approving businesses and managing users.
-
-
-
-## Folder Structure
-
-```plaintext
-business-directory-backend/
-│
-├── src/
-│   ├── config/                 # Configuration files
-│   │   ├── db.js
-│   │   └── jwt.js
-│   │
-│   ├── controllers/            # Controllers for handling requests
-│   │   ├── authController.js
-│   │   ├── businessController.js
-│   │   ├── userController.js
-│   │   ├── ratingController.js
-│   │   ├── commentController.js
-│   │   ├── favoriteController.js
-│   │   ├── tagController.js
-│   │   ├── photoController.js
-│   │   ├── roleController.js
-│   │   ├── permissionController.js
-│   │   └── adminController.js
-│   │
-│   ├── middlewares/            # Custom middleware
-│   │   ├── authMiddleware.js
-│   │   ├── errorHandler.js
-│   │   └── validateRequest.js
-│   │
-│   ├── models/                 # Database models
-│   │   ├── index.js
-│   │   ├── user.js
-│   │   ├── business.js
-│   │   ├── rating.js
-│   │   ├── comment.js
-│   │   ├── favorite.js
-│   │   ├── tag.js
-│   │   ├── photo.js
-│   │   ├── role.js
-│   │   ├── permission.js
-│   │   ├── rolePermission.js
-│   │   ├── auditLog.js
-│   │   ├── passwordResetToken.js
-│   │   ├── twoFactorAuth.js
-│   │
-│   ├── routes/                 # API routes
-│   │   ├── authRoutes.js
-│   │   ├── businessRoutes.js
-│   │   ├── userRoutes.js
-│   │   ├── ratingRoutes.js
-│   │   ├── commentRoutes.js
-│   │   ├── favoriteRoutes.js
-│   │   ├── tagRoutes.js
-│   │   ├── photoRoutes.js
-│   │   ├── roleRoutes.js
-│   │   ├── permissionRoutes.js
-│   │   └── adminRoutes.js
-│   │
-│   ├── services/               # Business logic
-│   │   ├── authService.js
-│   │   ├── businessService.js
-│   │   ├── userService.js
-│   │   ├── ratingService.js
-│   │   ├── commentService.js
-│   │   ├── favoriteService.js
-│   │   ├── tagService.js
-│   │   ├── photoService.js
-│   │   ├── roleService.js
-│   │   ├── permissionService.js
-│   │   ├── adminService.js
-│   │   └── emailService.js
-│   │
-│   ├── utils/                  # Utility functions
-│   │   ├── helpers.js
-│   │   └── logger.js
-│   │
-│   ├── migrations/             # Database migration files
-│   │   ├── 20240802221401_create_users_table.js
-│   │   ├── 20240802221644_create_businesses_table.js
-│   │   ├── 20240802221934_create_roles_table.js
-│   │   ├── 20240802222004_create_tags_table.js
-│   │   ├── 20240802222227_create_favorites_table.js
-│   │   ├── 20240802222308_create_comments_table.js
-│   │   ├── 20240802222336_create_ratings_table.js
-│   │   ├── 20240802222413_create_role_permissions_table.js
-│   │   ├── 20240802222447_create_business_photos_table.js
-│   │   ├── 20240802222919_create_permissions_table.js
-│   │
-│   ├── app.js                  # Express app setup
-│   └── server.js               # Entry point of the application
-│
-├── .env                        # Environment variables
-├── package.json                # NPM dependencies and scripts
-└── README.md                   # Project documentation
-
-
-## Setup Instructions
-
-### Prerequisites
-
-- Node.js
-- PostgreSQL
-
-### Installation
-
-1. Clone the repository:
-
-    ```bash
-    git clone https://github.com/yourusername/business-directory-backend.git
-    cd business-directory-backend
-    ```
-
-2. Install dependencies:
-
-    ```bash
-    npm install
-    ```
-
-3. Configure environment variables:
-   - Create a `.env` file in the root directory and add the necessary environment variables:
-
-    ```env
-    DATABASE_URL=postgres://user:password@localhost:5432/business_directory_1
-    JWT_SECRET=your_jwt_secret
-    ```
-
-4. Run database migrations:
-
-    ```bash
-    npx knex migrate:latest
-    ```
-
-5. Start the server:
-
-    ```bash
-    npm start
-    ```
-
-### Database Migrations
-
-Database migrations are handled using Knex.js. To manage migrations, use the following commands:
-
-- Run the latest migrations:
-
-    ```bash
-    npx knex migrate:latest
-    ```
-
-- Rollback the last batch of migrations:
-
-    ```bash
-    npx knex migrate:rollback
-    ```
-
-- Create a new migration file:
-
-    ```bash
-    npx knex migrate:make migration_name
-    ```
-
-### API Documentation
+## API Documentation
 
 The API follows RESTful principles. Below are the primary endpoints available:
 
@@ -298,11 +141,162 @@ The API follows RESTful principles. Below are the primary endpoints available:
 - Get All Permissions: `GET /api/permissions`
 - Create a Permission: `POST /api/permissions`
 
-### Contributing
+## Setup Instructions
 
-Contributions are welcome! Please fork the repository and create a pull request with your changes.
+### Prerequisites
 
-#### Contributors
+- Node.js
+- PostgreSQL
+
+### Installation
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/yourusername/business-directory-backend.git
+    cd business-directory-backend
+    ```
+
+2. Install dependencies:
+
+    ```bash
+    npm install
+    ```
+
+3. Configure environment variables:
+   - Create a `.env` file in the root directory and add the necessary environment variables:
+
+    ```env
+    DATABASE_URL=postgres://user:password@localhost:5432/business_directory_1
+    JWT_SECRET=your_jwt_secret
+    ```
+
+4. Run database migrations:
+
+    ```bash
+    npx knex migrate:latest
+    ```
+
+5. Start the server:
+
+    ```bash
+    npm start
+    ```
+
+## Database Migrations
+
+Database migrations are handled using Knex.js. To manage migrations, use the following commands:
+
+- Run the latest migrations:
+
+    ```bash
+    npx knex migrate:latest
+    ```
+
+- Rollback the last batch of migrations:
+
+    ```bash
+    npx knex migrate:rollback
+    ```
+
+- Create a new migration file:
+
+    ```bash
+    npx knex migrate:make migration_name
+    ```
+
+
+### Contributors
 
 - [Fitsumhelina](https://github.com/Fitsumhelina)
 - [Yabe12](https://github.com/Yabe12)
+
+## Folder Structure
+
+```plaintext
+business-directory-backend/
+│
+├── src/
+│   ├── config/                 # Configuration files
+│   │   ├── db.js
+│   │   └── jwt.js
+│   │
+│   ├── controllers/            # Controllers for handling requests
+│   │   ├── authController.js
+│   │   ├── businessController.js
+│   │   ├── userController.js
+│   │   ├── ratingController.js
+│   │   ├── commentController.js
+│   │   ├── favoriteController.js
+│   │   ├── tagController.js
+│   │   ├── photoController.js
+│   │   ├── roleController.js
+│   │   ├── permissionController.js
+│   │   └── adminController.js
+│   │
+│   ├── middlewares/            # Custom middleware
+│   │   ├── authMiddleware.js
+│   │   ├── errorHandler.js
+│   │   └── validateRequest.js
+│   │
+│   ├── models/                 # Database models
+│   │   ├── index.js
+│   │   ├── user.js
+│   │   ├── business.js
+│   │   ├── rating.js
+│   │   ├── comment.js
+│   │   ├── favorite.js
+│   │   ├── tag.js
+│   │   ├── photo.js
+│   │   ├── role.js
+│   │   ├── permission.js
+│   │   └── admin.js
+│   │
+│   ├── routes/                 # API routes
+│   │   ├── authRoutes.js
+│   │   ├── businessRoutes.js
+│   │   ├── userRoutes.js
+│   │   ├── ratingRoutes.js
+│   │   ├── commentRoutes.js
+│   │   ├── favoriteRoutes.js
+│   │   ├── tagRoutes.js
+│   │   ├── photoRoutes.js
+│   │   ├── roleRoutes.js
+│   │   ├── permissionRoutes.js
+│   │   └── adminRoutes.js
+│   │
+│   ├── services/               # Business logic
+│   │   ├── authService.js
+│   │   ├── businessService.js
+│   │   ├── userService.js
+│   │   ├── ratingService.js
+│   │   ├── commentService.js
+│   │   ├── favoriteService.js
+│   │   ├── tagService.js
+│   │   ├── photoService.js
+│   │   ├── roleService.js
+│   │   ├── permissionService.js
+│   │   └── adminService.js
+│   │
+│   ├── utils/                  # Utility functions
+│   │   ├── logger.js
+│   │   └── validator.js
+│   │
+│   ├── .env                    # Environment variables
+│   ├── .gitignore               # Git ignore file
+│   ├── knexfile.js              # Knex configuration
+│   ├── package.json             # NPM package file
+│   ├── server.js               # Entry point of the application
+│   └── README.md               # Project documentation
+│
+└── migrations/                 # Database migrations
+    ├── 20240802123456_create_users_table.js
+    ├── 20240802123457_create_businesses_table.js
+    ├── 20240802123458_create_ratings_table.js
+    ├── 20240802123459_create_comments_table.js
+    ├── 20240802123460_create_favorites_table.js
+    ├── 20240802123461_create_tags_table.js
+    ├── 20240802123462_create_photos_table.js
+    ├── 20240802123463_create_roles_table.js
+    ├── 20240802123464_create_permissions_table.js
+    └── 20240802123465_create_admins_table.js
