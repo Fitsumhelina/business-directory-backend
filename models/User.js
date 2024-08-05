@@ -1,22 +1,23 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
+// models/User.js
 
-const User = sequelize.define('User', {
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false,
+const bookshelf = require('../db/bookshelf');
+
+const User = bookshelf.model('User', {
+  tableName: 'users',
+  idAttribute: 'user_id',
+  hasTimestamps: ['date_registered', 'last_login'],
+  businesses() {
+    return this.hasMany('Business', 'owner_id');
   },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
+  favorites() {
+    return this.hasMany('Favorite', 'user_id');
   },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
+  comments() {
+    return this.hasMany('Comment', 'user_id');
   },
-}, {
-  timestamps: true,
+  ratings() {
+    return this.hasMany('Rating', 'user_id');
+  }
 });
 
 module.exports = User;
