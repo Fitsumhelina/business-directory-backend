@@ -28,16 +28,19 @@ model User {
 
 // Business model
 model Business {
-  id               String            @id @default(uuid())
-  businessName     String
-  ownerId          String
-  categoryId       String
-  businessEmail    String            @unique
-  businessAddress  String
-  businessPhone    String            @unique
-  websiteUrl       String?
-  latitude         Float?
-  longitude        Float?
+    id                     String   @id @default(uuid())
+    businessName           String
+    ownerId                String
+    categoryId             String
+    businessEmail          String
+    businessAddress        String
+    businessPhone          String
+    websiteUrl             String
+    latitude               Float
+    longitude              Float
+    openingTime           String   // Ensure this field exists
+  closingTime           String
+    businessLicenseNumber  Int? 
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   owner            User              @relation("UserBusinesses", fields: [ownerId], references: [id])
